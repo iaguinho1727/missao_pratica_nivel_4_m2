@@ -1,0 +1,37 @@
+<app-title title="Dados do Livro"></app-title>
+
+<form [noValidate]="false" (ngSubmit)="salvarLivro()" >
+  <div class="form-group mb-3">
+    <label for="titulo">Titulo</label>
+    <input name="titulo"  id="titulo" [(ngModel)]="titulo"  required   type="text" class="form-control"  id="titulo" />
+  </div>
+  <div class="form-group mb-3">
+    <label for="resumo">Resumo</label>
+    <textarea required [(ngModel)]="resumo" name="resumo" id="resumo" class="form-control">
+
+    </textarea>
+
+  </div>
+
+  <div class="form-group mb-3">
+    <label for="editoras">Editoras</label>
+    <select required [(ngModel)]="editora" name="editora" id="editoras" class="form-control">
+      @for(editora of EDITORAS_OPTIONS;track editora)
+      {
+        <option [value]="editora" >{{editora}}</option>
+      }
+
+    </select>
+
+  </div>
+
+  <div class="form-group mb-3">
+    <label for="autores">Autores</label>
+    <textarea  [(ngModel)]="autores" name="autores" id="autores" class="form-control">
+
+    </textarea>
+
+  </div>
+
+  <button type="submit" class="btn btn-primary">Salvar Dados</button>
+</form>
