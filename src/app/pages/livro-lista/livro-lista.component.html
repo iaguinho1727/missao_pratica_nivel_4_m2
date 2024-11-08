@@ -2,21 +2,24 @@
 
 </app-title>
 
-<table className="table table-striped">
-  <thead className="table-dark">
+<table class="table table-striped">
+  <thead class="table-dark">
 
       <tr>
         @for(column of COLUMNS;track column)
         {
-          <th>{{column}}</th>
+          <th scope="col" >{{column}}</th>
         }
 
       </tr>
   </thead>
   <tbody>
-    <app-livro-linha>
+    @for(livro of livros_service.getLivros();track livro.getTitulo()){
+      <app-livro-linha [livro]="livro" >
 
-    </app-livro-linha>
+      </app-livro-linha>
+
+    }
 
   </tbody>
 </table>

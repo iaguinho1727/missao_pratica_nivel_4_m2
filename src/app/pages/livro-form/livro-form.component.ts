@@ -3,6 +3,7 @@ import { TitleComponent } from "../../components/title/title.component";
 import { FormsModule } from '@angular/forms';
 import { EditorasService } from '../../services/editoras.service';
 import { LivrosService } from '../../services/livros.service';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-livro-form',
   standalone: true,
@@ -19,16 +20,19 @@ export class LivroFormComponent {
   ]
   livro_service : LivrosService
   editora: string=''
-  constructor( editora : EditorasService,livro_service : LivrosService)
+  router : Router
+  constructor( editora : EditorasService,livro_service : LivrosService,router : Router)
   {
     this.EDITORAS_OPTIONS=editora.getEditoras()
     this.editora=this.EDITORAS_OPTIONS[0]
     this.livro_service=livro_service
+    this.router=router
   }
 
-  salvarLivro()
+  async salvarLivro()
   {
-    this.livro_service.salvarLivro()
+    this.livro_service.salvarLivro(this.titulo,this.resumo,this.autores.split('\n'),this.editora)
+    await this.router.navigate(['livros'])
   }
 
 

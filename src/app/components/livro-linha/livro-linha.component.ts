@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { LivrosService } from '../../services/livros.service';
+import { Livro } from '../../../types';
 
 @Component({
   selector: 'app-livro-linha',
@@ -8,22 +9,23 @@ import { LivrosService } from '../../services/livros.service';
   template: `
 
     <tr>
-      {{livro_service.getLivros()}}
-        <!-- <td >
+
+        <td >
             <div >
-                <div class="w-100">{livro.titulo}</div>
-                <button   type="button" class="btn btn-danger mt-3">Excluir</button>
+                <div class="w-100">{{livro.getTitulo()}}</div>
+                <button (click)="excluirLivro()"  type="button" class="btn btn-danger mt-3">Excluir</button>
             </div>
 
         </td>
-        <td>{livro.resumo}</td>
-        <td>{livro.editora}</td>
+        <td>{{livro.getResumo()}}</td>
+        <td>{{livro.getEditora()}}</td>
         <td>
             <ul>
-
-                {livro.autores.map(item=><li key={item}  > {item} </li>)}
+              @for(autor of livro.getAutores();track livro.getCodEditora()){
+                <li>{{autor}}</li>
+              }
             </ul>
-        </td> -->
+        </td>
 
 
     </tr>
@@ -32,11 +34,19 @@ import { LivrosService } from '../../services/livros.service';
 })
 export class LivroLinhaComponent {
 
+  @Input() livro !: Livro
   livro_service : LivrosService
 
   constructor(livro_service : LivrosService)
+
   {
     this.livro_service=livro_service
   }
+
+  excluirLivro()
+  {
+    this.livro_service.excluirLivro(this.livro)
+  }
+
 
 }
