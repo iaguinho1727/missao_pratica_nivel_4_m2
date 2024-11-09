@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
 import { TitleComponent } from "../../components/title/title.component";
-import { LivroLinhaComponent } from "../../components/livro-linha/livro-linha.component";
+
 import { LivrosService } from '../../services/livros.service';
+import { Livro } from '../../../types';
 
 @Component({
   selector: 'app-livro-lista',
   standalone: true,
-  imports: [TitleComponent, LivroLinhaComponent],
+  imports: [TitleComponent],
   templateUrl: './livro-lista.component.html',
   styleUrl: './livro-lista.component.css'
 })
@@ -20,5 +21,7 @@ export class LivroListaComponent {
   {
     this.livros_service=livro_service
   }
+
+
 
 }

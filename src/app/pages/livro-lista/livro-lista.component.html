@@ -15,9 +15,27 @@
   </thead>
   <tbody>
     @for(livro of livros_service.getLivros();track livro.getTitulo()){
-      <app-livro-linha [livro]="livro" >
+      <tr>
 
-      </app-livro-linha>
+        <td >
+            <div >
+                <div class="w-100">{{livro.getTitulo()}}</div>
+                <button (click)="livros_service.excluirLivro(livro)" type="button" class="btn btn-danger mt-3">Excluir</button>
+            </div>
+
+        </td>
+        <td>{{livro.getResumo()}}</td>
+        <td>{{livro.getEditora()}}</td>
+        <td>
+            <ul>
+              @for(autor of livro.getAutores();track autor){
+                <li>{{autor}}</li>
+              }
+            </ul>
+        </td>
+
+
+      </tr>
 
     }
 
