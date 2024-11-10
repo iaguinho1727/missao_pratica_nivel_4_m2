@@ -1,0 +1,14 @@
+name: estaci-trabalho
+services:
+  angular:
+    hostname: estacio.angular.frontend
+    container_name: livraria-angular
+    command: --port $PORT
+    build:
+      context: .
+    volumes:
+      - .:/app
+      - /app/node_modules
+    ports:
+      - $PORT:$PORT
+
