@@ -1,25 +1,24 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environment } from '../../environments/environment';
+import { Editora } from '../../types';
+
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class EditorasService {
-  private editoras : string[] = [
-    "Companhia das Letras",
-    "Editora Record",
-    "Intrínseca",
-    "Globo Livros",
-    "Editora Rocco",
-    "Editora 34",
-    "Editora Planeta",
-    "Editora Aleph",
-    "Sextante",
-    "DarkSide Books"
-  ]
-  constructor() { }
 
-  getEditoras() : string[]
+
+
+  constructor(private http_client : HttpClient) {
+
+
+  }
+
+  getEditoras()
   {
-    return this.editoras
+    return this.http_client.get<Editora[]>(`${environment.API_URL}/editoras`)
   }
 }

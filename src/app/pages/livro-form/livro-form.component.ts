@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { EditorasService } from '../../services/editoras.service';
 import { LivrosService } from '../../services/livros.service';
 import { Router } from '@angular/router';
+import { Editora } from '../../../types';
 @Component({
   selector: 'app-livro-form',
   standalone: true,
@@ -15,23 +16,28 @@ export class LivroFormComponent {
   titulo : string=''
   resumo : string=''
   autores : string=''
-  EDITORAS_OPTIONS: string[] = [
+  editora : string=''
+  editora_options: Editora[] = [
 
   ]
-  livro_service : LivrosService
-  editora: string=''
-  router : Router
-  constructor( editora : EditorasService,livro_service : LivrosService,router : Router)
+
+
+  constructor(private  editora_service : EditorasService,private livro_service : LivrosService,private router : Router)
   {
-    this.EDITORAS_OPTIONS=editora.getEditoras()
-    this.editora=this.EDITORAS_OPTIONS[0]
-    this.livro_service=livro_service
-    this.router=router
+
+  }
+  ngOnInit()
+  {
+    this.editora_service.getEditoras().subscribe(editoras=>{
+      this.editora_options=editoras
+      this.editora=String(this.editora_options[0].codigo)
+    })
   }
 
   async salvarLivro()
   {
-    this.livro_service.salvarLivro(this.titulo,this.resumo,this.autores.split('\n'),this.editora)
+    this.livro_service.salvarLivro(this.titulo,this.resumo,this.autores.split('\n'),Number(this.editora))
+    .subscribe()
     await this.router.navigate(['livros'])
   }
 

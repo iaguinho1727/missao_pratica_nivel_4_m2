@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { TitleComponent } from "../../components/title/title.component";
 
 import { LivrosService } from '../../services/livros.service';
-import { Livro } from '../../../types';
+import { Livro, LivroResponse } from '../../../types';
 
 @Component({
   selector: 'app-livro-lista',
@@ -14,13 +14,28 @@ import { Livro } from '../../../types';
 export class LivroListaComponent {
 
   COLUMNS=['Título','Resumo','Editora','Autores']
+  livros : LivroResponse[]=[]
 
-  livros_service : LivrosService
 
-  constructor(livro_service : LivrosService)
+  constructor(public livro_service : LivrosService)
   {
-    this.livros_service=livro_service
+
   }
+  ngOnInit()
+  {
+    this.livro_service.getLivros().subscribe(livro_response=>{
+      this.livros=livro_response
+    })
+  }
+
+  excluirLivro(livro : LivroResponse)
+  {
+    this.livro_service.excluirLivro(livro).subscribe(response=>{
+      this.livros=this.livros.filter(item=>item._id!=livro._id)
+    })
+  }
+
+
 
 
 

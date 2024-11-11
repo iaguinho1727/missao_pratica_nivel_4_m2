@@ -1,22 +1,27 @@
 import { v4 as uuid}  from "uuid"
 
+export interface Editora{
+  _id: string
+  nome: string
+  codigo: number
+}
+export interface LivroResponse{
+  _id: string
+  titulo: string
+  resumo: string
+  autores: string[]
+  editora: string
+}
+
+
 export class Livro
 {
 
-  private titulo: string
-  private resumo: string
-  private editora: string
-  private autores: string[]
-  private codEditora: string
 
 
-  constructor(titulo: string,resumo: string,autores: string[],editora: string)
+  constructor(private titulo: string,private resumo: string,private autores: string[],private codEditora: number)
   {
-    this.autores=autores
-    this.titulo=titulo
-    this.resumo=resumo
-    this.editora=editora
-    this.codEditora=uuid()
+
   }
   getTitulo()
   {
@@ -35,9 +40,6 @@ export class Livro
   {
     return this.autores
   }
-  getEditora()
-  {
-    return this.editora
-  }
 
 }
+

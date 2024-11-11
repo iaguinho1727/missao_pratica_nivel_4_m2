@@ -1,37 +1,39 @@
 import { Injectable } from '@angular/core';
-import { Livro } from '../../types';
+import { Livro, LivroResponse } from '../../types';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../environments/environment';
+
+
+
+
 @Injectable({
   providedIn: 'root'
 })
 
 
-
-
-
 export class LivrosService {
 
 
-  static LIVROS : Livro[] =[]
 
-  constructor() {
+
+  constructor(private http_client : HttpClient) {
 
 
   }
 
-  salvarLivro(titulo: string,resumo: string,autores: string[],editora: string)
+  salvarLivro(titulo: string,resumo: string,autores: string[],codEditora: number)
   {
-    let livro=new Livro(titulo,resumo,autores,editora)
-    LivrosService.LIVROS.push(livro)
+    let livro=new Livro(titulo,resumo,autores,codEditora)
+    return this.http_client.post(`${environment.API_URL}/livros`,livro)
   }
-  excluirLivro(livro : Livro)
+  excluirLivro(livro : LivroResponse)
   {
-    let filtered_livros=LivrosService.LIVROS.filter(item=>item.getCodEditora()!=livro.getCodEditora())
-    LivrosService.LIVROS=filtered_livros
+    return this.http_client.delete(`${environment.API_URL}/livros/${livro._id}`)
   }
 
   getLivros()
   {
-    return LivrosService.LIVROS
+    return this.http_client.get<LivroResponse[]>(`${environment.API_URL}/livros`)
   }
 
 

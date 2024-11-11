@@ -16,9 +16,9 @@
   <div class="form-group mb-3">
     <label for="editoras">Editoras</label>
     <select required [(ngModel)]="editora" name="editora" id="editoras" class="form-control">
-      @for(editora of EDITORAS_OPTIONS;track editora)
+      @for(editora of editora_options;track editora.codigo)
       {
-        <option [value]="editora" >{{editora}}</option>
+        <option [value]="editora.codigo" >{{editora.nome}}</option>
       }
 
     </select>

@@ -14,21 +14,21 @@
       </tr>
   </thead>
   <tbody>
-    @for(livro of livros_service.getLivros();track livro.getTitulo()){
+    @for(livro of livros;track livro._id){
       <tr>
 
         <td >
             <div >
-                <div class="w-100">{{livro.getTitulo()}}</div>
-                <button (click)="livros_service.excluirLivro(livro)" type="button" class="btn btn-danger mt-3">Excluir</button>
+                <div class="w-100">{{livro.titulo}}</div>
+                <button (click)="excluirLivro(livro)" type="button" class="btn btn-danger mt-3">Excluir</button>
             </div>
 
         </td>
-        <td>{{livro.getResumo()}}</td>
-        <td>{{livro.getEditora()}}</td>
+        <td>{{livro.resumo}}</td>
+        <td>{{livro.editora}}</td>
         <td>
             <ul>
-              @for(autor of livro.getAutores();track autor){
+              @for(autor of livro.autores;track autor){
                 <li>{{autor}}</li>
               }
             </ul>
