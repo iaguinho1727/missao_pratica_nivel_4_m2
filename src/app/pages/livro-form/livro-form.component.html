@@ -15,7 +15,7 @@
 
   <div class="form-group mb-3">
     <label for="editoras">Editoras</label>
-    <select required [(ngModel)]="editora" name="editora" id="editoras" class="form-control">
+    <select [disabled]="isEditoraLoading" required [(ngModel)]="editora" name="editora" id="editoras" class="form-control">
       @for(editora of editora_options;track editora.codigo)
       {
         <option [value]="editora.codigo" >{{editora.nome}}</option>
@@ -33,5 +33,10 @@
 
   </div>
 
-  <button type="submit" class="btn btn-primary">Salvar Dados</button>
+  <button [disabled]="isCreating" type="submit" class="btn btn-primary">
+    @if(isCreating){
+      <span  class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+    }
+    Salvar Dados
+  </button>
 </form>

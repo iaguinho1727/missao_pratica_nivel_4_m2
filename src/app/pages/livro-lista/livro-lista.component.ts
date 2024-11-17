@@ -15,6 +15,8 @@ export class LivroListaComponent {
 
   COLUMNS=['Título','Resumo','Editora','Autores']
   livros : LivroResponse[]=[]
+  isDeletingMap=new Map()
+  isFetching=false
 
 
   constructor(public livro_service : LivrosService)
@@ -23,15 +25,21 @@ export class LivroListaComponent {
   }
   ngOnInit()
   {
-    this.livro_service.getLivros().subscribe(livro_response=>{
+    this.isFetching=true
+    this.livro_service.getLivros()
+    .subscribe(livro_response=>{
       this.livros=livro_response
+      this.isFetching=false
     })
   }
 
   excluirLivro(livro : LivroResponse)
   {
-    this.livro_service.excluirLivro(livro).subscribe(response=>{
+    this.isDeletingMap.set(livro._id,true)
+    this.livro_service.excluirLivro(livro)
+    .subscribe(response=>{
       this.livros=this.livros.filter(item=>item._id!=livro._id)
+      this.isDeletingMap.set(livro._id,false)
     })
   }
 

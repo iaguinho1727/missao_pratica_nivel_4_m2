@@ -17,6 +17,8 @@ export class LivroFormComponent {
   resumo : string=''
   autores : string=''
   editora : string=''
+  isEditoraLoading =false
+  isCreating=false
   editora_options: Editora[] = [
 
   ]
@@ -28,17 +30,24 @@ export class LivroFormComponent {
   }
   ngOnInit()
   {
-    this.editora_service.getEditoras().subscribe(editoras=>{
+    this.isEditoraLoading=true
+    this.editora_service.getEditoras()
+    .subscribe(editoras=>{
       this.editora_options=editoras
       this.editora=String(this.editora_options[0].codigo)
+      this.isEditoraLoading=false
     })
   }
 
   async salvarLivro()
   {
+    this.isCreating=true
     this.livro_service.salvarLivro(this.titulo,this.resumo,this.autores.split('\n'),Number(this.editora))
-    .subscribe()
-    await this.router.navigate(['livros'])
+    .subscribe(async()=>{
+      this.isCreating=false
+      await this.router.navigate(['livros'])
+    })
+
   }
 
 

@@ -20,7 +20,12 @@
         <td >
             <div >
                 <div class="w-100">{{livro.titulo}}</div>
-                <button (click)="excluirLivro(livro)" type="button" class="btn btn-danger mt-3">Excluir</button>
+                <button [disabled]="isDeletingMap.get(livro._id)" (click)="excluirLivro(livro)" type="button" class="btn btn-danger mt-3">
+                  @if(isDeletingMap.get(livro._id)){
+                    <span  class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                  }
+                  Excluir
+                </button>
             </div>
 
         </td>
@@ -41,3 +46,11 @@
 
   </tbody>
 </table>
+@if(isFetching)
+{
+<div class="d-flex justify-content-center">
+  <span style="width: 4em;height: 4em" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+
+</div>
+
+}
